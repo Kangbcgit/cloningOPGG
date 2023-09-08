@@ -6,6 +6,7 @@ import axios from 'axios'
 function CallApiTest() {
   const [text, setText] = useState('');
   const [Riot, setRiot] = useState(null);
+  const [apiCalled, setApiCalled] = useState(false);
   // const getApi = async () => {
   //   axios.get("/api").then(res => setApiData(res.data));
   // }
@@ -16,6 +17,7 @@ function CallApiTest() {
         throw new Error('서버 응답 오류: ' + response.status);
       }
       setRiot(response.data);
+      setApiCalled(true);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -38,6 +40,15 @@ function CallApiTest() {
       <input type="text" onChange={getInput} onKeyDown={e => {
         if (e.key === 'Enter') postApi(e.target.value);
       }}/>
+      {apiCalled ? (
+        <><h3>{Riot.name}</h3>
+      <div className="wrapImg">
+        <img src={`https://ddragon.leagueoflegends.com/cdn/11.14.1/img/profileicon/${Riot.profileIconId}.png`} alt="" />
+      </div>
+      <div>Level: {Riot.summonerLevel}</div></>
+      ) : null
+      }
+      
     </>
   );
 }
