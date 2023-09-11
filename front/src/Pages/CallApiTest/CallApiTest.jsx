@@ -43,7 +43,7 @@ function CallApiTest() {
       {apiCalled ? (
         <><h3>{Riot.name}</h3>
       <div className="wrapImg">
-        <img src={`https://ddragon.leagueoflegends.com/cdn/11.14.1/img/profileicon/${Riot.profileIconId}.png`} alt="" />
+        <img src={`https://ddragon.leagueoflegends.com/cdn/13.17.1/img/profileicon/${Riot.profileIconId}.png`} alt="" />
       </div>
       <div>Level: {Riot.summonerLevel}</div></>
       ) : null

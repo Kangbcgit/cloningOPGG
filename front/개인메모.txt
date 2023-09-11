@@ -1,0 +1,10 @@
+1. summonerName으로 api 요청시 오는 정보
+  1) id
+  2) summonerName (입력값)
+  3) 프로필 아이콘 숫자 (`https://ddragon.leagueoflegends.com/cdn/13.17.1/img/profileicon/${Riot.profileIconId}.png`);
+  4) puuid
+  5) revisionDate 
+  6) summonerLevel
+
+2) 두번쨰로 필요한 정보 해당 소환사의 티어
+  1)/lol/league/v4/entries/by-summoner/{encryptedSummonerId} <-- api 에서 ctrl + F 해서 찾으면 이게 티어 불러오는 요청

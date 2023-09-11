@@ -6,7 +6,7 @@ const router = express.Router();
 const key = 'RGAPI-80b1e183-adbd-44c1-9ac8-e84515db307c';
 
 router.use(cors({
-  origin: "http://localhost:3000"
+  origin: "http://localhost:3002"
 }));
 
 router.post('/api/summoner/:name', async (req, res) => {
