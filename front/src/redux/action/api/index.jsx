@@ -14,3 +14,9 @@ const callApi = (name) => {
     });;
   }
 }
+
+const actionApi = {
+  callApi
+};
+
+export default actionApi

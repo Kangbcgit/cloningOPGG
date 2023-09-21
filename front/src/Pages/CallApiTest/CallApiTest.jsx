@@ -1,27 +1,21 @@
 // CallApiTest.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import actionApi from '../../redux/action/api';
+import { useSelector } from 'react-redux';
 
 
 function CallApiTest() {
   const [text, setText] = useState('');
   const [Riot, setRiot] = useState(null);
   const [apiCalled, setApiCalled] = useState(false);
+  const summonerInfoData = useSelector(state => state.summonerInfoData);
   // const getApi = async () => {
   //   axios.get("/api").then(res => setApiData(res.data));
   // }
   const postApi = async (name) => {
-    axios.post(`http://localhost:5000/api/summoner/${name}`)
-    .then((response) => {
-      if (!response.status) {
-        throw new Error('서버 응답 오류: ' + response.status);
-      }
-      setRiot(response.data);
-      setApiCalled(true);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });;
+    await actionApi(name);
+    setApiCalled(true);
   }
 
   const getInput = e => {

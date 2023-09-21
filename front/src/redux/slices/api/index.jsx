@@ -3,7 +3,13 @@ import { createSlice } from '@reduxjs/toolkit'
 const apiSlice = createSlice({
   name: 'api',
   initialState: {
-    summonerName: ''
+    summonerInfoData: ''
+  },
+  reducers: (state = this.initialState, action) => {
+    switch(action.type) {
+      case "API_CALL": 
+        return ''
+    }
   }
 });
 
