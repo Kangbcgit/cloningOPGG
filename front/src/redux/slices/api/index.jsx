@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 const apiSlice = createSlice({
   name: 'api',
   initialState: {
-    summonerInfoData: ''
+    summonerInfoData: {}
   },
-  reducers: (state = this.initialState, action) => {
-    switch(action.type) {
-      case "API_CALL": 
-        return ''
+  reducers: {
+    apiCall: (state, action) => {
+      console.log('action', action.payload.summonerInfoData);
+      return {...state, summonerInfoData: action.payload.summonerInfoData};
     }
   }
 });

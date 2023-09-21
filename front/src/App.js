@@ -1,17 +1,16 @@
 // App.js
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import CallApiTest from './Pages/CallApiTest/CallApiTest';
-
-const queryClient = new QueryClient();
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <div className="App">
         <CallApiTest />
       </div>
-    </QueryClientProvider>
+    </Provider>
   );
 }
 
