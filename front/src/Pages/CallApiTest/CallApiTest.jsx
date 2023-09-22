@@ -27,9 +27,7 @@ function CallApiTest() {
 
   return (
     <>
-      <h1>안녕하세요 프론트 페이지 입니다.</h1>
-      
-      {/* <button onClick={postApi}>눌러라</button> */}
+      <h1>아래 input area에 summoner id를 입력해주세요</h1>
       <input type="text" onChange={getInput} onKeyDown={e => {
         if (e.key === 'Enter') postApi(e.currentTarget.value);
       }}/>
