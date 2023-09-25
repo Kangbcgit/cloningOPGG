@@ -1,11 +1,19 @@
 import React from 'react'
-import CallApiTest from '../CallApiTest/CallApiTest'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  &>header {
+
+  }
+`;
 
 function Main() {
   return (
-    <>
-      <CallApiTest/>
-    </>
+    <Wrapper>
+      <header>
+        
+      </header>
+    </Wrapper>
   )
 }
 
