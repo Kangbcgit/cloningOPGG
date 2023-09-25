@@ -37,12 +37,31 @@ const ImportWrapper = styled(Wrapper)`
     display: flex;
     height: 40px;
     /* border-radius: 10px; */
-    &>div {
+    &>.regionButton {
+      position: relative;
       width: 74px;
       height: 100%;
-      background: white;
       border-radius: 10px 0 0 10px;
+      background: var(--region_bg);
+      &>button {
+        width: 100%;
+        height: 100%;
+      }
+
+      &>.regionList {
+        position: absolute;
+        left: 0;
+        top: 100%;
+
+        display: flex;
+        flex-direction: column;
+        &>button {
+          width: 74px;
+          height: 40px;
+        }
     }
+    }
+    
     &>input {
       width: 264px;
       height: 100%;
@@ -51,15 +70,15 @@ const ImportWrapper = styled(Wrapper)`
     &>button {
       position: relative;
       width: 60px;
-      height: 40px;
+      height: 100%;
       border-radius: 0 10px 10px 0;
       &>img {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 70%;
-        height: 70%;
+        width: 60%;
+        height: 60%;
         object-fit: contain;
       }
     }
@@ -103,12 +122,16 @@ function Main() {
         <img src={`${process.env.PUBLIC_URL}/images/WrapperBackground/WrapperBackgroundwebp.webp`} alt="" />
       </ImportWrapBgImg>
       <form action="">
-        <div>
-          <button></button>
-          <button></button>
-          <button></button>
+        <div className='regionButton'>
+          <button>선택해라</button>
+          <div className='regionList'>
+            <button>여긴 중국</button>
+            <button>여긴 한국</button>
+            <button>여긴 미쿸</button>
+          </div>
         </div>
-        <input type="text" placeholder='소환사님의 이름을 입력해주세요.'/>
+        <label htmlFor="search"></label>
+        <input id = "search" type="text" placeholder='소환사님의 이름을 입력해주세요.'/>
         <button>
           <img src={`${process.env.PUBLIC_URL}/images/form/icon-gg.svg`} alt="" />
         </button>

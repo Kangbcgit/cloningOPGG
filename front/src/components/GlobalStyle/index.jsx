@@ -17,6 +17,9 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
     margin: 0;
   }
+  :root {
+    --region_bg: #ECF2FF;
+  }
 `;
 
 export default GlobalStyle
