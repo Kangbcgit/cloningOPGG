@@ -1,8 +1,11 @@
 import React from 'react'
+import CallApiTest from '../CallApiTest/CallApiTest'
 
 function Main() {
   return (
-    <div>Main</div>
+    <>
+      <CallApiTest/>
+    </>
   )
 }
 
