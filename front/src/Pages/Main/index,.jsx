@@ -6,6 +6,8 @@ const ImportWrapper = styled(Wrapper)`
   display: flex;
   flex-flow: column;
   align-items: center;
+  gap: 10px;
+
   height: 369px;
   background: #28344E;
   /* &::after {
@@ -26,9 +28,41 @@ const ImportWrapper = styled(Wrapper)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: calc(100% - 32px);
+    /* width: calc(100% - 32px); */
+    width: 100%;
     height: 53px;
     padding: 0 16px;
+  }
+  &>form {
+    display: flex;
+    height: 40px;
+    /* border-radius: 10px; */
+    &>div {
+      width: 74px;
+      height: 100%;
+      background: white;
+      border-radius: 10px 0 0 10px;
+    }
+    &>input {
+      width: 264px;
+      height: 100%;
+      padding: 0 10px;
+    }
+    &>button {
+      position: relative;
+      width: 60px;
+      height: 40px;
+      border-radius: 0 10px 10px 0;
+      &>img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+      }
+    }
   }
 `;
 const ImportWrapSilbilingSiteLogo = styled(WrapImg)`
@@ -69,7 +103,15 @@ function Main() {
         <img src={`${process.env.PUBLIC_URL}/images/WrapperBackground/WrapperBackgroundwebp.webp`} alt="" />
       </ImportWrapBgImg>
       <form action="">
-        <input type="text" />
+        <div>
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
+        <input type="text" placeholder='소환사님의 이름을 입력해주세요.'/>
+        <button>
+          <img src={`${process.env.PUBLIC_URL}/images/form/icon-gg.svg`} alt="" />
+        </button>
       </form>
     </ImportWrapper>
   )

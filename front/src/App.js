@@ -31,9 +31,10 @@ function App() {
     console.log('현재 innerWidth는 ',currentInnerWidth, 'px 입니다');
   }, [currentInnerWidth])
   return (
-    <div className="App">
-      <Main />
-    </div>
+    <>
+      {<Main />}
+      
+    </>
   );
 }
 
