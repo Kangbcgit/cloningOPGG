@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   :root {
+    --mainColor_bg: #5383E8;
+    --mainColor_font: #B3CDFF;
+    --topView_bg: #28344E;
     --region_bg: #ECF2FF;
   }
 `;

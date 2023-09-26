@@ -6,6 +6,7 @@ import store from './redux/store';
 import Main from './Pages/Main';
 import { current } from '@reduxjs/toolkit';
 import componentDidMount from './redux/action/currentInnerWidth';
+import { Route, Routes } from 'react-router-dom';
 
 const display = {
   mobile: 430,
@@ -20,20 +21,25 @@ const display = {
 function App() {
   const currentMedia = useSelector(state => state.currentInnerWidth.currentDisplay)
   const dispatch = useDispatch();
+  const [isLoadPage, setLoadPage] = useState(false);
+
   const calcInnerWidth = async () => {
     await dispatch(componentDidMount.calcCurrentInnerWidth());
   }
   useEffect(() => {
     calcInnerWidth();
     window.addEventListener('resize', calcInnerWidth);
+    setLoadPage(false);
   }, [])
   useEffect(() => {
-    console.log('현재 innerWidth는 ',currentMedia.CurrentInnerWidth, 'px 입니다');
+    console.log('현재 innerWidth는 ',currentMedia.currentInnerWidth, 'px 입니다');
+    setLoadPage(true);
   }, [currentMedia])
   return (
     <>
-      {<Main />}
-      
+    <Routes>
+      <Route path='/' element={<>{isLoadPage ? <Main /> : null}</>}/>
+    </Routes>
     </>
   );
 }
