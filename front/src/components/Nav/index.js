@@ -8,11 +8,16 @@ export const SlideNav = styled.nav`
   align-items: center;
   gap: 24px;
 
-  width: fit-content;
+  width: inherit  ;
   height: 46px;
+
+  padding: 0 24px;
 
   color: var(--mainColor_font);
   background: var(--mainColor_bg);
+
+  overflow: scroll;
+
   &>${ImportLink} {
     display: flex;
     align-items: center;

@@ -4,7 +4,11 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { WrapImg, WrapMobileModal, Wrapper } from '../../components/Wrapper'
 import { ImportLink, SlideNav } from '../../components/Nav'
+import { Commnunity, CommunityItem } from '../../components/Community'
 
+const ImportCommunity = styled(Commnunity)`
+
+`;
 const ImportMainMobileNav = styled(SlideNav)``;
 const ImportRegionModal = styled(WrapMobileModal)``;
 const ImportTopViewWrapper = styled(Wrapper)``;
@@ -15,7 +19,7 @@ const ImportParentWrapper = styled(Wrapper)`
     gap: 10px;
 
     width: 100%;
-    height: 369px;
+    padding-bottom: 20px;
     background: var(--topView_bg);
     @media (min-width:431px) {
       background-color: red;
@@ -34,7 +38,9 @@ const ImportParentWrapper = styled(Wrapper)`
       background-size: cover;
     } */
     &>header {
-      position: fixed;
+      position: absolute;
+      left: 0;
+      top: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -138,6 +144,7 @@ const ImportWrapBgImg = styled(WrapImg)`
 
 function Main() {
   const regionModal = useRef();
+  let touchStartPoint = 0;
   const touchState = useState({
     startPoint: 0,
     endPoint: 0
@@ -151,6 +158,11 @@ function Main() {
     e.preventDefault();
     target.classList.remove('on');
   }
+  /* start point - end point = 이동한 거리 => transform으로 입력
+    근데 굳이 end point를 사용할 필요가 있을까? 
+    move 포인트.. 그걸 활용하면 그냥 그대로 될거같은데.
+    마치 api 두번 호출하는 느낌
+  */
   const MobileNavTouchStart = e => {
 
   }
@@ -208,7 +220,22 @@ function Main() {
         <ImportLink to='/'>프로 관전</ImportLink>
         <ImportLink to='/'>강의</ImportLink>
       </ImportMainMobileNav>
-      
+      <ImportCommunity>
+        <h4>Kangbcgit Comment</h4>
+        <CommunityItem>
+          <div className="order">
+          1
+          </div>
+          <div className="text">
+            <h5>제목 입니다.</h5>
+            <span>작성시간 입니다.</span>
+            <span>닉네임</span>
+          </div>
+          <div className="thumnail">
+
+          </div>
+        </CommunityItem>
+        </ImportCommunity>
     </ImportParentWrapper>
   )
 }

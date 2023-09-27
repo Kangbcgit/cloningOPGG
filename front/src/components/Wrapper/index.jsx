@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 export const Wrapper = styled.div`
   position: relative;
   width: ${props => props.currentInnerWidth}px;
-  border: 1px solid rgb(120, 0, 255);
+  /* border: 1px solid rgb(120, 0, 255); */
   overflow: hidden;
 `;
 

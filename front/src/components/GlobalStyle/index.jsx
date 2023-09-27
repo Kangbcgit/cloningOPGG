@@ -22,6 +22,8 @@ const GlobalStyle = createGlobalStyle`
     --mainColor_font: #B3CDFF;
     --topView_bg: #28344E;
     --region_bg: #ECF2FF;
+    --community_bg: #222226;
+    --communityItem_bg: #31313C;
   }
 `;
 
