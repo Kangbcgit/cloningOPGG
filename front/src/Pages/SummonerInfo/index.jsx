@@ -15,7 +15,7 @@ function SummonerInfo() {
   }
 
   useEffect(() => {
-    postApi(params.name);
+    postApi(params.nameg);
   }, []);
 
   return (

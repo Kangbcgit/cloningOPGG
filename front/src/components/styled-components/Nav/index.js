@@ -22,6 +22,7 @@ export const SlideNav = styled.nav`
     display: flex;
     align-items: center;
     height: 100%;
+    padding: auto;
     white-space: nowrap;
   }
 `; 

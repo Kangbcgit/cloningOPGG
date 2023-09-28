@@ -4,7 +4,7 @@ import currentInnerWidth from "../slices/currentInnerWidth";
 
   const rootReducer = {
     summonerInfoDataReducer: apiSlice.reducer,
-    currentInnerWidth: currentInnerWidth.reducer,
+    currentInnerWidthReducer: currentInnerWidth.reducer,
   }
 
   const store = configureStore({

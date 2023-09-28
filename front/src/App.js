@@ -20,7 +20,7 @@ const display = {
 //   desktop: `(max-width: ${display.desktop}px)`
 // }
 function App() {
-  const currentMedia = useSelector(state => state.currentInnerWidth.currentDisplay)
+  const currentMedia = useSelector(state => state.currentInnerWidthReducer.currentDisplay)
   const dispatch = useDispatch();
   const [isLoadPage, setLoadPage] = useState(false);
 
