@@ -12,7 +12,6 @@ export const Commnunity = styled.div`
 
 export const CommunityItem = styled.div`
   display: flex;
-  justify-content: space-between;
 
   height: 114px;
   width: 90%;

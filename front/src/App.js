@@ -7,6 +7,7 @@ import Main from './Pages/Main';
 import { current } from '@reduxjs/toolkit';
 import componentDidMount from './redux/action/currentInnerWidth';
 import { Route, Routes } from 'react-router-dom';
+import SummonerInfo from './Pages/SummonerInfo';
 
 const display = {
   mobile: 430,
@@ -39,6 +40,7 @@ function App() {
     <>
     <Routes>
       <Route path='/' element={<>{isLoadPage ? <Main /> : null}</>}/>
+      <Route path='/SummonerInfo/:name' element={<SummonerInfo />} />
     </Routes>
     </>
   );

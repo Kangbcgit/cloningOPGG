@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { WrapImg, WrapMobileModal, Wrapper } from '../../components/Wrapper'
-import { ImportLink, SlideNav } from '../../components/Nav'
-import { Commnunity, CommunityItem } from '../../components/Community'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate} from 'react-router-dom'
+import { WrapImg, WrapMobileModal, Wrapper } from '../../components/styled-components/Wrapper'
+import { ImportLink, SlideNav } from '../../components/styled-components/Nav'
+import { Commnunity, CommunityItem } from '../../components/styled-components/Community'
+import CoummunityPost from '../../components/CommunityPost'
 
 const ImportCommunity = styled(Commnunity)`
 
@@ -143,6 +144,8 @@ const ImportWrapBgImg = styled(WrapImg)`
 `;
 
 function Main() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const regionModal = useRef();
   let touchStartPoint = 0;
   const touchState = useState({
@@ -171,6 +174,12 @@ function Main() {
   }
   const MobileNavTouchEnd = e => {
 
+  }
+  const searchSummonersInfo = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      navigate(`/summonerInfo/${e.target.value}`);
+    }
   }
   useEffect(() => {
     window.addEventListener('touchstart', e => {
@@ -205,7 +214,7 @@ function Main() {
             </ImportRegionModal>
           </div>
           <label htmlFor="search"></label>
-          <input id = "search" type="text" placeholder='소환사님의 이름을 입력해주세요.'/>
+          <input id = "search" type="text" placeholder='소환사님의 이름을 입력해주세요.' onKeyDown={searchSummonersInfo} />
           <button>
             <img src={`${process.env.PUBLIC_URL}/images/form/icon-gg.svg`} alt="" />
           </button>
@@ -222,19 +231,18 @@ function Main() {
       </ImportMainMobileNav>
       <ImportCommunity>
         <h4>Kangbcgit Comment</h4>
-        <CommunityItem>
-          <div className="order">
-          1
-          </div>
-          <div className="text">
-            <h5>제목 입니다.</h5>
-            <span>작성시간 입니다.</span>
-            <span>닉네임</span>
-          </div>
-          <div className="thumnail">
-
-          </div>
-        </CommunityItem>
+        <CoummunityPost order={1} title={'안녕하세요 게시글 입니다.'} postTime={'2023.09.28'} nickname={'아나까떼'}>  
+        </CoummunityPost>
+        <CoummunityPost order={1} title={'안녕하세요 게시글 입니다.'} postTime={'2023.09.28'} nickname={'아나까떼'}>  
+        </CoummunityPost>
+        <CoummunityPost order={1} title={'안녕하세요 게시글 입니다.'} postTime={'2023.09.28'} nickname={'아나까떼'}>  
+        </CoummunityPost>
+        <CoummunityPost order={1} title={'안녕하세요 게시글 입니다.'} postTime={'2023.09.28'} nickname={'아나까떼'}>  
+        </CoummunityPost>
+        <CoummunityPost order={1} title={'안녕하세요 게시글 입니다.'} postTime={'2023.09.28'} nickname={'아나까떼'}>  
+        </CoummunityPost>
+        <CoummunityPost order={1} title={'안녕하세요 게시글 입니다.'} postTime={'2023.09.28'} nickname={'아나까떼'}>  
+        </CoummunityPost>
         </ImportCommunity>
     </ImportParentWrapper>
   )
