@@ -7,6 +7,7 @@ import { ImportLink, SlideNav } from '../../components/styled-components/Nav'
 import { Commnunity, CommunityItem } from '../../components/styled-components/Community'
 import CoummunityPost from '../../components/CommunityPost'
 import Header from '../../components/styled-components/Header'
+import { isHeaderImgLoad } from '../../redux/action/isHeaderImgLoad'
 
 const ImportCommunity = styled(Commnunity)`
 
@@ -42,16 +43,14 @@ function Main() {
   const MobileNavTouchEnd = e => {
 
   }
-  const searchSummonersInfo = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      navigate(`/summonerInfo/${e.target.value}`);
-    }
-  }
   useEffect(() => {
     window.addEventListener('touchstart', e => {
-    console.log(e.changedTouches[0].pageY);
-});});
+      console.log(e.changedTouches[0].pageY);
+    });
+  }, []);
+  useEffect(() => {
+    dispatch(isHeaderImgLoad(true));
+  }, []);
   return (
     <ImportParentWrapper>
       <Header/>

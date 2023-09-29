@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { SlideNav } from '../Nav';
 import { WrapImg, WrapMobileModal, Wrapper } from '../Wrapper';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const ImportRegionModal = styled(WrapMobileModal)``;
@@ -33,9 +33,6 @@ const ImportTopViewWrapper = styled(Wrapper)`
     background-size: cover;
   } */
   &>header {
-    position: absolute;
-    left: 0;
-    top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,10 +127,11 @@ const ImportWrapBgImg = styled(WrapImg)`
   width: 290px;
   height: 174px;
 
-  margin-top: 60px;
+  margin: 30px 0;
 `;
 function Header() {
   const navigate = useNavigate();
+  const isHeaderImgLoad = useSelector(state => state.isHeaderImgLoad);
   const regionModal = useRef();
   const currentInnerWidth = useSelector(state => state.currentInnerWidthReducer.currentInnerWidth);
   const modalOn = (e, target) => {
@@ -150,6 +148,10 @@ function Header() {
       navigate(`/summonerInfo/${e.target.value}`);
     }
   }
+  
+  useEffect(() => {
+    console.log(isHeaderImgLoad);
+  }, [isHeaderImgLoad]);
   return (
     <>
       <ImportTopViewWrapper currentInnerWidth={currentInnerWidth}>
@@ -157,13 +159,17 @@ function Header() {
           <ImportWrapSilbilingSiteLogo>
             <img src={`${process.env.PUBLIC_URL}/images/header/leagueOfLegends_Logo.svg`} alt="" />
           </ImportWrapSilbilingSiteLogo>
-          <ImportWrapOpggLogo>
+          <ImportWrapOpggLogo as={Link} to={'/'}>
             <img src={`${process.env.PUBLIC_URL}/images/header/opgg_Logo.svg`} alt="" />
           </ImportWrapOpggLogo>
-          <ImportWrapLoginIcon>
+          <ImportWrapLoginIcon to='/'>
             <img src={`${process.env.PUBLIC_URL}/images/header/icon-login.svg`} alt="" />
           </ImportWrapLoginIcon>
         </header>
+        {isHeaderImgLoad ? 
+        (<ImportWrapBgImg>
+          <img src={`${process.env.PUBLIC_URL}/images/WrapperBackground/WrapperBackgroundwebp.webp`} alt="" />
+        </ImportWrapBgImg>) : null}
         <form action="">
           <div className='regionButton'>
             <button onClick={e => modalOn(e, regionModal.current)}>선택해라</button>
