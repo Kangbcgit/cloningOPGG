@@ -12,7 +12,7 @@ function SummonerInfo() {
   const isHeaderImgLoadinRedux = useSelector(state => state.isHeaderImgLoad);
   const [apiCalled, setApiCalled] = useState(false);
   const postApi = async (name) => {
-    await dispatch(actionApi.callApi(name));
+    await dispatch(actionApi.riotSummonerSearchApi(name));
     console.log('sum:',summonerInfoData);
     setApiCalled(true);
   }

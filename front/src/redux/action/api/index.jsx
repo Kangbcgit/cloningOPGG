@@ -1,7 +1,7 @@
 import axios from "axios";
 import apiSlice from "../../slices/api";
 
-const callApi = (name) => {
+const riotSummonerSearchApi = (name) => {
     console.log('name: ',name);
   return async (dispatch, getState) => {
     return axios.post(`http://localhost:5000/api/summoner/${name}`)
@@ -10,7 +10,7 @@ const callApi = (name) => {
         throw new Error('서버 응답 오류: ' + response.status);
       }
       console.log('res: ', response.data);
-      dispatch(apiSlice.actions.apiCall({summonerInfoData: response.data}));
+      dispatch(apiSlice.actions.apiCall({type: 'riotSummonerSearch', summonerInfoData: response.data}));
       return response.data;
     })
     .catch((error) => {
@@ -19,8 +19,21 @@ const callApi = (name) => {
   }
 }
 
+const opggSummonerWordCompletion = name => {
+  return async (dispatch, getState) => {
+    axios.get(
+      `http://localhost:5000/api/wordCompletion/summoner/${name}`).then(response => {
+        if (!response.status === 200) {
+          throw new Error('서버 응답 오류: 에러코드' + response.status);
+        }
+        dispatch(apiSlice.actions.apiCall({type:  'opggSummonerWordCompletion', data: response.data}))
+      });
+  }
+}
+
 const actionApi = {
-  callApi
+  riotSummonerSearchApi,
+  opggSummonerWordCompletion
 };
 
 export default actionApi

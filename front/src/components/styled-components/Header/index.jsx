@@ -2,9 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { SlideNav } from '../Nav';
 import { WrapImg, WrapMobileModal, Wrapper } from '../Wrapper';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { debounce as _debounce } from 'lodash'
+import axios from 'axios';
+import actionApi from '../../../redux/action/api';
+ 
 
 const ImportRegionModal = styled(WrapMobileModal)``;
 const ImportTopViewWrapper = styled(Wrapper)`
@@ -42,6 +45,7 @@ const ImportTopViewWrapper = styled(Wrapper)`
     padding: 0 16px;
   }
   &>form {
+    position: relative;
     display: flex;
     height: 40px;
     /* border-radius: 10px; */
@@ -69,6 +73,7 @@ const ImportTopViewWrapper = styled(Wrapper)`
         opacity: 0;
         pointer-events: none;
         overflow: hidden;
+        transition: opacity .1s;
         &.on {
           opacity: 1;
           pointer-events: auto;
@@ -90,9 +95,19 @@ const ImportTopViewWrapper = styled(Wrapper)`
     }
     
     &>input {
+      position: relative;
       width: 264px;
       height: 100%;
       padding: 0 10px;
+    } 
+    &>.wordCompletion {
+      position: absolute;
+      left: 74px;
+      top: 100%;
+      width: 264px;
+      height: 40px;
+
+      background: red;
     }
     &>button {
       position: relative;
@@ -131,9 +146,13 @@ const ImportWrapBgImg = styled(WrapImg)`
 `;
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isHeaderImgLoad = useSelector(state => state.isHeaderImgLoad);
+  const opggSummonerWordCompletion = useSelector(state => state.summonerInfoDataReducer.opggSummonerWordCompletion);
   const regionModal = useRef();
+  const wordCompletionTag = useRef();
   const currentInnerWidth = useSelector(state => state.currentInnerWidthReducer.currentInnerWidth);
+  const debouncedOPGG = _debounce(wordCompletion, 1000);
   const modalOn = (e, target) => {
     e.preventDefault();
     target.classList.add('on');
@@ -148,7 +167,11 @@ function Header() {
       navigate(`/summonerInfo/${e.target.value}`);
     }
   }
-  
+  function wordCompletion (e) {
+    let name = e.target.value;
+    dispatch(actionApi.opggSummonerWordCompletion(name));
+    wordCompletionTag.current.style.cssText = `display: block`;
+  }
   useEffect(() => {
     console.log(isHeaderImgLoad);
   }, [isHeaderImgLoad]);
@@ -182,7 +205,25 @@ function Header() {
             </ImportRegionModal>
           </div>
           <label htmlFor="search"></label>
-          <input id = "search" type="text" placeholder='소환사님의 이름을 입력해주세요.' onKeyDown={searchSummonersInfo} />
+          <input id = "search" type="text" placeholder='소환사님의 이름을 입력해주세요.' autoComplete="off" onKeyDown={searchSummonersInfo} onChange={debouncedOPGG} />
+          <div className="wordCompletion" ref={wordCompletionTag}>
+            {opggSummonerWordCompletion?.map((item, index) => {
+              console.log(item);
+              return (<div key={index}>
+                <img src={`${item.profile_image_url}`} alt="" />
+                <span>
+                  {item.solo_tier_info ? (<span>{item.solo_tier_info.tier}</span>) : null}
+                  <h3>{item.name}</h3>
+                </span>
+
+              </div>);
+            })}
+            <button onClick={e => {
+              e.preventDefault();
+              if (!wordCompletionTag.current.style) return;
+              wordCompletionTag.current.style.cssText = `display: none;`;
+              }}>버튼을 누르면 닫혀요~</button>
+          </div>
           <button>
             <img src={`${process.env.PUBLIC_URL}/images/form/icon-gg.svg`} alt="" />
           </button>

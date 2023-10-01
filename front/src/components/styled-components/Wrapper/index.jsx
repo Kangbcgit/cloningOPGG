@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   position: relative;
   width: ${props => props.currentInnerWidth}px;
   /* border: 1px solid rgb(120, 0, 255); */
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 /** img 태그를 감싸고 직계자손 img의 크기를 조정해주는 styled-components */
