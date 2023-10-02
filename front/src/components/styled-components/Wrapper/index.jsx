@@ -11,8 +11,8 @@ export const Wrapper = styled.div`
 
 /** img 태그를 감싸고 직계자손 img의 크기를 조정해주는 styled-components */
 export const WrapImg = styled.div`
-  width: ${props => props.width};
-  height: ${props => props.height};
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || '100%'};
   /* overflow: hidden; */
   &>img {
     width: 100%;

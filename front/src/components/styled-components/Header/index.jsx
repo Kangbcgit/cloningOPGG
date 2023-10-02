@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { SlideNav } from '../Nav';
 import { WrapImg, WrapMobileModal, Wrapper } from '../Wrapper';
 import styled from 'styled-components';
@@ -144,37 +144,106 @@ const ImportWrapBgImg = styled(WrapImg)`
 
   margin: 30px 0;
 `;
+const WordCompletion = styled.nav`
+  position: absolute;
+  left: 74px;
+  top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 264px;
+  padding: 10px 10px 0 10px;
+
+  background: var(--communityItem_bg);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .1s;
+
+  &.on {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  &>.summonerNameCompletion {
+    display: flex;
+    color: white;
+    &>${WrapImg} {
+      overflow: hidden;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    &>span {
+      &>h3 {
+        font-weight: normal;
+        font-size: 15px;
+      }
+      &>span {
+        font-size: 13px;
+      }
+    }
+  }
+  
+`;
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isHeaderImgLoad = useSelector(state => state.isHeaderImgLoad);
+
+  const isHeaderImgLoad = useSelector(state => state.currentInnerWidthReducer.currentDisplay.headerImgToggle);
   const opggSummonerWordCompletion = useSelector(state => state.summonerInfoDataReducer.opggSummonerWordCompletion);
-  const regionModal = useRef();
-  const wordCompletionTag = useRef();
+  const opggLoadError = useSelector(state => state.summonerInfoDataReducer.error);
   const currentInnerWidth = useSelector(state => state.currentInnerWidthReducer.currentInnerWidth);
-  const debouncedOPGG = _debounce(wordCompletion, 1000);
+
+  const regionModal = useRef();
+
+  const [closeSummonersList, setCloseSummonersList] = useState(true);
+  const wordCompletionTag = useRef();
+  const inputText = useRef();
+
   const modalOn = (e, target) => {
-    e.preventDefault();
     target.classList.add('on');
   }
   const modalOff = (e, target) => {
-    e.preventDefault();
     target.classList.remove('on');
   }
   const searchSummonersInfo = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      navigate(`/summonerInfo/${e.target.value}`);
+      if (inputText) {
+        let targetSummonerName;
+        try {
+          targetSummonerName = e.currentTarget.children[1].children[0].textContent;
+        } catch (error) {
+            targetSummonerName = inputText.current?.value;
+        }
+        
+        if(targetSummonerName) {
+          navigate(`/summonerInfo/${targetSummonerName}`);
+        }
+      }
+  }
+  const debouncedOPGG = _debounce(wordCompletionAction, 200);
+  async function  wordCompletionAction (e)  {
+    let name = e?.target.value;
+    if (name === '' || name === undefined || opggLoadError) {
+      setCloseSummonersList(true);
+      return;
     }
+    await dispatch(actionApi.opggSummonerWordCompletion(name));
+    setCloseSummonersList(false);
   }
-  function wordCompletion (e) {
-    let name = e.target.value;
-    dispatch(actionApi.opggSummonerWordCompletion(name));
-    wordCompletionTag.current.style.cssText = `display: block`;
-  }
+  // useEffect(() => {
+  //   window.addEventListener('click', e => {
+  //     if (wordCompletionTag?.current === null) return;
+  //     if (!wordCompletionTag.current.contains(e.target)) {
+  //       setCloseSummonersList(true);
+  //     } else {
+  //       setCloseSummonersList(false);
+  //     }
+  //   })
+  // }, []);
   useEffect(() => {
-    console.log(isHeaderImgLoad);
-  }, [isHeaderImgLoad]);
+    console.log('주인님! 눌렸어요!')
+  }, [closeSummonersList]);
   return (
     <>
       <ImportTopViewWrapper currentInnerWidth={currentInnerWidth}>
@@ -193,9 +262,9 @@ function Header() {
         (<ImportWrapBgImg>
           <img src={`${process.env.PUBLIC_URL}/images/WrapperBackground/WrapperBackgroundwebp.webp`} alt="" />
         </ImportWrapBgImg>) : null}
-        <form action="">
+        <form action="" onSubmit={searchSummonersInfo}>
           <div className='regionButton'>
-            <button onClick={e => modalOn(e, regionModal.current)}>선택해라</button>
+            <button type='button' onClick={e => modalOn(e, regionModal.current)}>선택해라</button>
             <ImportRegionModal ref={regionModal} onClick={e => modalOff(e, regionModal.current)}>
               <div className='regionList'>
                 <button>여긴 중국</button>
@@ -205,26 +274,29 @@ function Header() {
             </ImportRegionModal>
           </div>
           <label htmlFor="search"></label>
-          <input id = "search" type="text" placeholder='소환사님의 이름을 입력해주세요.' autoComplete="off" onKeyDown={searchSummonersInfo} onChange={debouncedOPGG} />
-          <div className="wordCompletion" ref={wordCompletionTag}>
+          <input ref={inputText} id="search" type="text" placeholder='소환사님의 이름을 입력해주세요.' autoComplete="off" onChange={debouncedOPGG} onClick={() => {
+            setCloseSummonersList(false);
+            wordCompletionAction();
+          }} />
+          <WordCompletion ref={wordCompletionTag} className={`${closeSummonersList ? null : 'on'}`}>
             {opggSummonerWordCompletion?.map((item, index) => {
-              console.log(item);
-              return (<div key={index}>
-                <img src={`${item.profile_image_url}`} alt="" />
-                <span>
-                  {item.solo_tier_info ? (<span>{item.solo_tier_info.tier}</span>) : null}
-                  <h3>{item.name}</h3>
-                </span>
-
+              {/* console.log(item); */}
+              return (
+                <div className='summonerNameCompletion' onClick={searchSummonersInfo}>
+                  <WrapImg width={'36px'} height={'36px'}>
+                    <img src={`${item.profile_image_url}`} alt="" />
+                  </WrapImg>
+                  <span>
+                    <h3>{item.name}</h3>
+                    {item.solo_tier_info ? (<span>{`${item.solo_tier_info.tier} ${item.solo_tier_info.division} - ${item.solo_tier_info.lp}LP`}</span>) : `level : ${item.level}`}
+                  </span>
               </div>);
             })}
-            <button onClick={e => {
-              e.preventDefault();
-              if (!wordCompletionTag.current.style) return;
-              wordCompletionTag.current.style.cssText = `display: none;`;
-              }}>버튼을 누르면 닫혀요~</button>
-          </div>
-          <button>
+            <button type='button' onClick={() => {
+              setCloseSummonersList(true);
+              }} style={{background: 'var(--community_bg)', color: 'white'}} >닫기</button>
+          </WordCompletion>
+          <button type='submit'>
             <img src={`${process.env.PUBLIC_URL}/images/form/icon-gg.svg`} alt="" />
           </button>
         </form>

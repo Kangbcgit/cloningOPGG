@@ -28,6 +28,7 @@ const currentInnerWidth = createSlice({
       state.currentDisplay = {... state.currentDisplay,
         currentInnerWidth: action.payload.currentInnerWidth,
         currentMedia: setMedia(action.payload.currentInnerWidth),
+        headerImgToggle: action.payload.currentInnerWidth <= display.tablet,
       };
     }
   }

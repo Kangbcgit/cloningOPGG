@@ -23,3 +23,19 @@
 1. 어제 해놓은 작업 이어서하기
   => Main 컴포넌트에서 Header 분리(header 안에 header~nav까지 욱여넣기로함)
   => Main에서 Header 떼어냈고 media query로할지 조건부 컴포넌트 렌더링할지 고민중.
+
+  2023.10.01 내일 해야할 일 적음
+  routes 외부에 있는 Header는 변경 사항이 없는데
+  / => sommonerInfo/:name 경로로 이동할 경우 173번줄에 있는
+  useRef값인 wordCompletionTag.current.style 이 찾을 수 없는 값이라고 나옴.
+
+  아래는 에러 메세지임. 
+
+  index.jsx:173 Uncaught TypeError: Cannot read properties of null (reading 'style')
+    at wordCompletion (index.jsx:173:1)
+    at invokeFunc (lodash.js:10401:1)
+    at trailingEdge (lodash.js:10450:1)
+    at timerExpired (lodash.js:10438:1)
+
+클래스 부여로써 wordCompletion을 제어. 나머지 스타일링 ㄱ..
+debounce 작업도 조금 작업이 필요해보임.
