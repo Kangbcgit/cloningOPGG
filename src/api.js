@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import cors from 'cors';
 import axios from "axios";
 
@@ -9,6 +9,7 @@ router.use(cors({
   origin: "http://localhost:3500"
 }));
 
+/** riot api에서 summoner name 검색 */
 router.post('/api/summoner/:name', async (req, res) => {
   const summonerName = req.params.name;
   console.log(summonerName);
@@ -38,5 +39,32 @@ router.post('/api/summoner/:name', async (req, res) => {
     res.status(500).json({ error: '서버 오류' });
   }
 });
+/** 자동완성 opgg 도둑질 */
+router.get('/api/wordCompletion/summoner/:name', async (req, res) => {
+  const summonerName = req.params.name;
+  console.log(summonerName);
+  axios.get(`https://op.gg/api/v1.0/internal/bypass/summoners/kr/autocomplete?keyword=${summonerName}`).then(response => {
+    if (response.status !== 200) {
+      throw new Error('이 오류의 코드는', response.status ,'입니다');
+    }
+    res.json(response.data);
 
+  });
+});
+
+router.get('/api/summoner/rank/:ID', async (req, res) => {
+  const summonerID = req.params.ID;
+  console.log(summonerID);
+  axios.get(`https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerID}`, {
+      headers: {
+        'X-Riot-Token': key, // API 키를 헤더에 포함시킵니다.
+      },
+    }).then(response => {
+    if (response.status !== 200) {
+      throw new Error('이 오류의 코드는', response.status ,'입니다');
+    }
+    console.log(response.data);
+    res.json(response.data);
+  });
+});
 export default router;

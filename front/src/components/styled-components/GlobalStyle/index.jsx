@@ -81,6 +81,7 @@ const GlobalStyle = createGlobalStyle`
     --region_bg: #ECF2FF;
     --community_bg: #222226;
     --communityItem_bg: #31313C;
+    --rank_bg: #282830;
     /* font-size */
     --mobile-community_title: 14px;
     --mobile-community_desc: 12px;

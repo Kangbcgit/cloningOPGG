@@ -45,9 +45,26 @@ const opggSummonerWordCompletion = name => {
   }
 }
 
+const riotSummonerRankInfoApi = (summonerID) => {
+  return async (dispatch, getState) => {
+    if(summonerID === undefined) return;
+    return axios.get(`http://localhost:5000/api/summoner/rank/${summonerID}`).then(response => {
+      if (response.status !== 200) {
+        throw new Error('이 오류의 코드는', response.status ,'입니다');
+      }
+      console.log(response.data);
+      dispatch(apiSlice.actions.apiCall({
+        type: 'riotSummonerRankInfo',
+        data: response.data,
+      }));
+    });
+  }
+}
+
 const actionApi = {
   riotSummonerSearchApi,
-  opggSummonerWordCompletion
+  opggSummonerWordCompletion,
+  riotSummonerRankInfoApi
 };
 
 export default actionApi
