@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/styled-components/Header';
 import { debounce as _debounce } from 'lodash';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const UserInfo = styled.div`
   width: 100%;
@@ -73,7 +74,7 @@ const UserRank = styled.div`
 `;
 const UserInfoBottom = styled.div`
   display: flex;
-  padding: 20px 0;
+  padding: 15px 0;
   ${UserRank} {
     flex: 1;
     display: flex;
@@ -81,7 +82,7 @@ const UserInfoBottom = styled.div`
     justify-content: center;
     align-items: center;
     &:first-child {
-      border-right: 2px solid red;
+      border-right: 2px solid var(--community_bg);
     }
   }
 `;
@@ -107,7 +108,20 @@ function SummonerInfo() {
   return (
     <>
       <Header/>
-      <UserInfo>
+      <button onClick={e => {
+        axios.post('http://localhost:5000/posts', {
+          name: '강븅찬',
+          title: '첫 post 게시글',
+          content: '아 아무튼 모코코라고',
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+            }).then(response => {
+          console.log(response.data);
+        })
+      }}>GG</button>
+      {/* <UserInfo>
         {summonerInfoData.name ? (
           <UserInfoTop>
           <div className="wrapImg">
@@ -139,7 +153,7 @@ function SummonerInfo() {
             </UserRank>
           </UserInfoBottom> : null
         }
-      </UserInfo>
+      </UserInfo> */}
     </>
   )
 }

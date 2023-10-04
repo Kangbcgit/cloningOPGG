@@ -1,13 +1,20 @@
-import express, { response } from "express";
+import express from "express";
 import cors from 'cors';
 import axios from "axios";
+
+const app = express();
+app.use(express.json()); 
+app.use(express.urlencoded( {extended : false } ));
 
 const router = express.Router();
 const key = 'RGAPI-80b1e183-adbd-44c1-9ac8-e84515db307c';
 
+
 router.use(cors({
   origin: "http://localhost:3500"
 }));
+
+app.use(router);
 
 /** riot api에서 summoner name 검색 */
 router.post('/api/summoner/:name', async (req, res) => {
@@ -67,4 +74,14 @@ router.get('/api/summoner/rank/:ID', async (req, res) => {
     res.json(response.data);
   });
 });
+
+router.post('/posts', async (req, res) => {
+  // axios.post(`http://35.237.57.237:3000/posts`).then(response => {
+  //   res.send(response.data);
+  //   console.log(response.data);
+  // })
+  console.log(req.body);
+  res.send('응답은 받았어');
+})
+
 export default router;
