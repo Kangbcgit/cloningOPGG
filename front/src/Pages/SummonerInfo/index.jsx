@@ -110,9 +110,10 @@ function SummonerInfo() {
       <Header/>
       <button onClick={e => {
         axios.post('http://localhost:5000/posts', {
-          name: '강븅찬',
-          title: '첫 post 게시글',
-          content: '아 아무튼 모코코라고',
+          id: 2,
+          name: '강븅찬2',
+          title: '첫 post 게시글2',
+          content: '아 아무튼 모코코라고2',
         }, {
           headers: {
             'Content-Type': 'application/json'
@@ -120,8 +121,17 @@ function SummonerInfo() {
             }).then(response => {
           console.log(response.data);
         })
-      }}>GG</button>
-      {/* <UserInfo>
+      }}>post</button>
+      <button onClick={e => {
+        axios.get(`http://localhost:5000/posts?page=${1}&limit=${10}`, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+            }).then(response => {
+          console.log(response.data);
+        })
+      }}>get</button>
+      <UserInfo>
         {summonerInfoData.name ? (
           <UserInfoTop>
           <div className="wrapImg">
@@ -153,7 +163,7 @@ function SummonerInfo() {
             </UserRank>
           </UserInfoBottom> : null
         }
-      </UserInfo> */}
+      </UserInfo>
     </>
   )
 }

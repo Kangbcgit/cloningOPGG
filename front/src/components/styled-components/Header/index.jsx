@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { SlideNav } from '../Nav';
+import { ImportLink, SlideNav } from '../Nav';
 import { WrapImg, WrapMobileModal, Wrapper } from '../Wrapper';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -186,6 +186,9 @@ const WordCompletion = styled.nav`
   }
   
 `;
+const ImportMainMobileNav = styled(SlideNav)`
+`;
+
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -300,6 +303,15 @@ function Header() {
             <img src={`${process.env.PUBLIC_URL}/images/form/icon-gg.svg`} alt="" />
           </button>
         </form>
+        <ImportMainMobileNav>
+          <ImportLink to='/'>챔피언 분석</ImportLink>
+          <ImportLink to='/'>게임 모드</ImportLink>
+          <ImportLink to='/'>커뮤니티</ImportLink>
+          <ImportLink to='/'>통계</ImportLink>
+          <ImportLink to='/'>랭킹</ImportLink>
+          <ImportLink to='/'>프로 관전</ImportLink>
+          <ImportLink to='/'>강의</ImportLink>
+        </ImportMainMobileNav>
       </ImportTopViewWrapper>
     </>
   )

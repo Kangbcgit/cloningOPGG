@@ -37,7 +37,7 @@ function CoummunityPost(props) {
       <div className="text">
         <h5>{props.title}</h5>
         <span className='postTime'>{props.postTime}</span>
-        <span className="nickname">{props.nickname}</span>
+        <span className="nickname">{props.name}</span>
       </div>
       <div className="thumnail">
         <div style={{border: '1px solid red'}}></div>
